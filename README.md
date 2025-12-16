@@ -3,6 +3,13 @@
 *(ClinicalConceptMention + ClinicalRelation)*
 
 ---
+## Convert your tables into a KB format INCEpTION understands
+
+INCEpTION supports:
+
+SKOS / RDF (TTL) ← best
+
+
 
 ## What this project is doing (conceptually)
 
