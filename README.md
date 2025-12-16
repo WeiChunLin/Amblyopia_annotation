@@ -9,7 +9,75 @@ INCEpTION supports:
 
 SKOS / RDF (TTL) ← best
 
+3.1 SKOS mapping (important)
 
+Each row in your tables becomes a skos:Concept.
+
+Root nodes
+
+Rows where Parent = (root) become top concepts.
+
+Example from your file 
+
+Knowledge Graph
+
+:
+
+AMBLYOPIA_TYPE
+AMBLYOPIA_SEVERITY
+AGE_GROUP
+REFRACTIVE_ERROR
+STRABISMUS_STATUS
+TREATMENT_MODALITY__OPTICAL_CORRECTION
+TREATMENT_MODALITY__PATCHING
+...
+
+
+These will be skos:hasTopConcept.
+
+Child nodes
+
+Rows with a parent become skos:broader.
+
+Example:
+
+AMBLYOPIA_TYPE__ANISOMETROPIC
+  skos:broader AMBLYOPIA_TYPE
+
+3.2 Minimal SKOS template (example)
+
+Here is a direct example using your data:
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix amb:  <http://example.org/amblyopia/> .
+
+amb:AMBLYOPIA_TYPE a skos:Concept ;
+    skos:prefLabel "Amblyopia type" ;
+    skos:definition "Category grouping all amblyopia etiology types" ;
+    skos:altLabel "amblyopia type" .
+
+amb:AMBLYOPIA_TYPE__ANISOMETROPIC a skos:Concept ;
+    skos:prefLabel "Anisometropic amblyopia" ;
+    skos:broader amb:AMBLYOPIA_TYPE ;
+    skos:definition "Reduced VA from unequal refractive error between eyes" ;
+    skos:altLabel "anisometropic" .
+
+
+You repeat this pattern for every row in your tables 
+
+Knowledge Graph
+
+.
+
+3.3 Practical conversion workflow (recommended)
+
+Do not hand-write everything.
+
+Put each table into CSV
+
+Write a small Python script to emit SKOS TTL
+
+Validate once, reuse forever
 
 ## What this project is doing (conceptually)
 
